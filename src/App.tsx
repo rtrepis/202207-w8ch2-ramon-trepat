@@ -19,30 +19,28 @@ const App = () => {
 
   const [starship, setStarship] = useState(initialStarship);
 
-  const apiRequest = async () => {
-    let response = await fetch("https://swapi.dev/api/starships/");
-    let data = await response.json();
-
-    const { count } = await data;
-    const arrayStarship = await data.results;
-
-    let starship_class: string[] = [];
-    arrayStarship.forEach((element: ArrayStarship) => {
-      starship_class.push(element.starship_class);
-    });
-
-    setStarship({
-      ...starship,
-      count: count,
-      starship_class: { ...starship_class },
-    });
-
-    console.log(starship);
-  };
-
   useEffect(() => {
+    const apiRequest = async () => {
+      let response = await fetch("https://swapi.dev/api/starships/");
+      let data = await response.json();
+
+      const { count } = await data;
+      const arrayStarship = await data.results;
+
+      let starship_class: string[] = [];
+      arrayStarship.forEach((element: ArrayStarship) => {
+        starship_class.push(element.starship_class);
+      });
+
+      setStarship({
+        ...starship,
+        count: count,
+        starship_class: { ...starship_class },
+      });
+    };
+
     apiRequest();
-  }, []);
+  }, [starship]);
 
   return (
     <div id="background-container">
